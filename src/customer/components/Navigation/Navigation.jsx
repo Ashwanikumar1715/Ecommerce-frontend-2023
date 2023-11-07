@@ -13,7 +13,7 @@ import { deepPurple } from "@mui/material/colors";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthModel from "../../Auth/AuthModel";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../../State/Auth/Action";
+import { getUser, logout } from "../../../State/Auth/Action";
 
 
 function classNames(...classes) {
@@ -49,9 +49,7 @@ export default function Navigation() {
 
   
   const jwt = localStorage.getItem("jwt");
-  const auth = useSelector(store=>store);
-  
-
+  const auth = useSelector(state => state.auth);
   const location = useLocation();
 
   useEffect(() => {
@@ -61,14 +59,20 @@ export default function Navigation() {
   }, [jwt, auth.jwt]);
 
   useEffect(() => {
-    
+    console.log("authuser",auth.user)
     if (auth.user) {
       handleClose();
     }
-    if (location.pathname === "/login" || location.pathname === "/register") {
+    if (location.pathname == "/login" || location.pathname == "/register") {
       navigate(-1);
     }
   }, [auth.user]);
+
+  const handleLogout=()=>{
+    dispatch(logout())
+    handleCloseUserMenu()
+  
+  }
 
   return (
     <div className="bg-white pb-10 ">
@@ -425,7 +429,7 @@ export default function Navigation() {
                           cursor: "pointer",
                         }}
                       >
-                        {auth.user?.firstName[0].toUpperCase}
+                        {auth.user?.firstName[0].toUpperCase()}
                       </Avatar>
 
                       <Menu
@@ -443,7 +447,7 @@ export default function Navigation() {
                         <MenuItem onClick={() => navigate("/account/order")}>
                           My Orders
                         </MenuItem>
-                        <MenuItem>Logout</MenuItem>
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
                       </Menu>
                     </div>
                   ) : (

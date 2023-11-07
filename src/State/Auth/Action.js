@@ -58,7 +58,7 @@ const loginFailure = (error) => ({
 export const login = (userData) => async (dispatch) => {
   dispatch(loginRequest());
   try {
-    const response = await axios.post(`${API_BASE_URL}/auth/signin`, userData);
+    const response = await axios.post(`${API_BASE_URL}/auth/login`, userData);
 
     const user = response.data;
 
@@ -101,9 +101,10 @@ export const getUser = (jwt) => async (dispatch) => {
   }
 };
 
-export const logout = (dispatch) => {
+export const logout =()=> (dispatch) => {
   dispatch({
     type: LOGOUT,
     payload: null,
   });
+  localStorage.clear();
 };

@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -17,7 +17,13 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { Radio } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import { useLocation, useNavigate, useNavigation } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { findProducts } from "../../../State/Product/Action";
 const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
@@ -30,9 +36,24 @@ function classNames(...classes) {
 export default function Product() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  const location = useLocation();
-  const navigate=useNavigate();
 
+
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const param = useParams();
+  const decodedQueryString = decodeURIComponent(location.search);
+  const searchParams = new URLSearchParams(decodedQueryString);
+
+  const colorValue = searchParams.get("color");
+  const sizeValue = searchParams.get("size");
+  const priceValue = searchParams.get("price");
+  const discount = searchParams.get("discount");
+  const sortValue = searchParams.get("sort");
+  const pageNumber = searchParams.get("page") || 1;
+  const stock = searchParams.get("stock");
+
+const {product}=useSelector(store=>store)
 
   const handleFilter = (value, sectionId) => {
     const searchParamms = new URLSearchParams(location.search);
@@ -48,21 +69,48 @@ export default function Product() {
     } else {
       filterValue.push(value);
     }
-    if(filterValue.length>0){
+    if (filterValue.length > 0) {
       searchParamms.set(sectionId, filterValue.join(","));
     }
-    const query= searchParamms.toString();
-    navigate({search:`?${query}`})
+    const query = searchParamms.toString();
+    navigate({ search: `?${query}` });
+  };
 
-  }
+  const handleRadioFilterChange = (e, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set(sectionId, e.target.value);
+    const query = searchParams.toString();
+    navigate({ search: `?${query}` });
+  };
 
-    const handleRadioFilterChange=(e, sectionId)=>{ 
-      const searchParams=new URLSearchParams(location.search)
-      searchParams.set(sectionId, e.target.value)
-      const query= searchParams.toString();
-    navigate({search:`?${query}`})
-
-  }
+  useEffect(() => {
+    const [minPrice, maxPrice] =
+      priceValue == null ? [0, 10000] : priceValue.split("-").map(Number);
+  
+    const data = {
+      category: param.lavelThree, // Corrected variable name 'lavelThree' to 'levelThree'
+      colors: colorValue || [],
+      sizes: sizeValue || [], // Corrected '||' instead of '|'
+      minPrice,
+      maxPrice,
+      minDiscount: discount || 0, // Corrected variable name 'disccount' to 'discount'
+      sort: sortValue || "price_low",
+      pageNumber: pageNumber - 1, // Subtract 1 to convert to 0-based index
+      pageSize: 10,
+      stock: stock, // Set to 'undefined' if not present in the URL
+    };
+    dispatch(findProducts(data));
+  }, [
+    param.lavelThree, // Corrected variable name 'lavelThree' to 'levelThree'
+    colorValue,
+    sizeValue,
+    priceValue,
+    discount,
+    sortValue,
+    pageNumber,
+    stock,
+  ]);
+  
 
   return (
     <div className="bg-white">
@@ -313,7 +361,9 @@ export default function Product() {
                                   className="flex items-center"
                                 >
                                   <input
-                                  onChange={() =>handleFilter(option.value,section.id)}
+                                    onChange={() =>
+                                      handleFilter(option.value, section.id)
+                                    }
                                     id={`filter-${section.id}-${optionIdx}`}
                                     name={`${section.id}[]`}
                                     defaultValue={option.value}
@@ -381,7 +431,9 @@ export default function Product() {
                                   {section.options.map((option, optionIdx) => (
                                     <>
                                       <FormControlLabel
-                                      onChange={(e)=>handleRadioFilterChange(e,section.id)}
+                                        onChange={(e) =>
+                                          handleRadioFilterChange(e, section.id)
+                                        }
                                         value={option.value}
                                         control={<Radio />}
                                         label={option.label}
@@ -402,7 +454,7 @@ export default function Product() {
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
                 <div className="flex flex-wrap justify-center bg-white py-5">
-                  {mens_kurta.map((item) => (
+                  {product.products && product.products?.content?.map((item) => (
                     <ProductCard product={item} />
                   ))}
                 </div>
