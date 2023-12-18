@@ -1,20 +1,31 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
 import React from "react";
 import AddressCard from "../AddressCard/AddressCard";
+import { useDispatch, useSelector } from "react-redux";
+import { createOrder } from "../../../State/Order/Action";
+import { useNavigate } from "react-router-dom";
 
 const DeliveryAddressForm = () => {
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+ 
+ const {auth}=useSelector(store=>store) 
+console.log("auth",auth)
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
         const address = {
             firstName: data.get("firstName"),
             lastName: data.get("lastName"),
-            streetAddress: data.get("streetAddress"), // Changed "address" to "streetAddress"
+            streetAddress: data.get("address"), 
             city: data.get("city"),
             state: data.get("state"),
-            zipCode: data.get("zipCode"), // Changed "zip" to "zipCode"
-            mobile: data.get("phoneNumber"),
+            zipCode: data.get("zip"),
+            mobile: data.get("phone"),
           };
+          const orderData={address,navigate};
+          dispatch(createOrder(orderData))
           
         console.log("address", address);
       };
@@ -29,7 +40,7 @@ const DeliveryAddressForm = () => {
           className="border rounded-md shadow-md h-[30.5rem] overflow-y-scroll"
         >
           <div className="p-5 py-7 border-b cursor-pointer">
-            <AddressCard />
+         {auth.user?.address?.map((item)=> <AddressCard address={item} />)}   
             <Button
               sx={{ mt: 2, bgcolor: "rgb(145, 85, 253)" }}
               size="large"

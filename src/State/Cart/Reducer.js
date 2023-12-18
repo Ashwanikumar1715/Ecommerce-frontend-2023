@@ -20,7 +20,7 @@ import {
     error: null,
   };
   
-export   const cartReducer = (state = initialState, action) => {
+export  const cartReducer = (state = initialState, action) => {
     switch (action.type) {
       case ADD_ITEM_TO_CART_REQUEST:
         return { ...state, loading: true, error: null };
@@ -28,7 +28,7 @@ export   const cartReducer = (state = initialState, action) => {
       case ADD_ITEM_TO_CART_SUCCESS:
         return {
           ...state,
-          cartItems: [...state.cartItems, ...action.payload.cartItems],
+          cartItems: [...state.cartItems, action.payload.cartItems],
           loading: false,
         };
   
@@ -39,7 +39,7 @@ export   const cartReducer = (state = initialState, action) => {
         return {
           ...state,
           loading: true,
-          error:null
+          error:null,
         };
   
       case GET_CART_SUCCESS:
@@ -68,18 +68,14 @@ export   const cartReducer = (state = initialState, action) => {
       case REMOVE_CART_ITEM_SUCCESS:
         return {
           ...state,
-          cartItems: state.cartItems.filter(
-            (item) => item.id !== action.payload
-          ),
+          deleteCartItem: action.payload,
           loading: false,
         };
   
       case UPDATE_CART_ITEM_SUCCESS:
         return {
           ...state,
-          cartItems: state.cartItems.map((item) =>
-            item.id === action.payload.id ? action.payload : item
-          ),
+          updateCartItem: action.payload,
           loading: false,
         };
   

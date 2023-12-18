@@ -8,8 +8,8 @@ import {
 } from "./ActionTypes";
 
 const initialState = {
+    orders:[],
     loading: false,
-    success: false,
     order: null,
     error: null,
   };

@@ -1,6 +1,7 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import CustomerRoutes from './Routers/CustomerRoutes';
+import AdminRouter from './Routers/AdminRouter';
 
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
 
 <Routes>
   <Route path='/*' element={<CustomerRoutes/>}></Route>
-
+  <Route path='/admin/*' element={<AdminRouter/>}></Route>
 </Routes>
 
     </div>

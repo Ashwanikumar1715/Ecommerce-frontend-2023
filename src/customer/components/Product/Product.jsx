@@ -8,14 +8,14 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { mens_kurta } from "../../../Data/Mens_kurta";
+
 import ProductCard from "./ProductCard";
 import { filters, singleFilter } from "./filterData";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import { Radio } from "@mui/material";
+import { Pagination, Radio } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import {
   useLocation,
@@ -35,7 +35,7 @@ function classNames(...classes) {
 
 export default function Product() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-
+  const {products}=useSelector(store=>store)
 
 
   const dispatch = useDispatch();
@@ -53,8 +53,15 @@ export default function Product() {
   const pageNumber = searchParams.get("page") || 1;
   const stock = searchParams.get("stock");
 
-const {product}=useSelector(store=>store)
 
+
+
+const handlePagination=(event,value)=>{
+const searchParamms=new URLSearchParams(location.search);
+searchParamms.set("page", value);
+const query=searchParamms.toString();
+navigate({search:`${query}`})
+}
   const handleFilter = (value, sectionId) => {
     const searchParamms = new URLSearchParams(location.search);
 
@@ -95,10 +102,11 @@ const {product}=useSelector(store=>store)
       maxPrice,
       minDiscount: discount || 0, // Corrected variable name 'disccount' to 'discount'
       sort: sortValue || "price_low",
-      pageNumber: pageNumber - 1, // Subtract 1 to convert to 0-based index
+      pageNumber: pageNumber, // Subtract 1 to convert to 0-based index
       pageSize: 10,
       stock: stock, // Set to 'undefined' if not present in the URL
     };
+    console.log("data", data);
     dispatch(findProducts(data));
   }, [
     param.lavelThree, // Corrected variable name 'lavelThree' to 'levelThree'
@@ -454,13 +462,20 @@ const {product}=useSelector(store=>store)
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
                 <div className="flex flex-wrap justify-center bg-white py-5">
-                  {product.products && product.products?.content?.map((item) => (
+                  {products.products && products.products?.content?.map((item) => (
                     <ProductCard product={item} />
                   ))}
                 </div>
               </div>
             </div>
           </section>
+
+<section className="w-full px=[3.6rem]">
+  <div className="pz-4 py-5 flex justify-center">
+    <Pagination count={products.products?.totalPages} color="secondary" onChange={handlePagination}/>
+  </div>
+</section>
+
         </main>
       </div>
     </div>
