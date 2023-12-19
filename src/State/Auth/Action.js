@@ -13,7 +13,6 @@ import {
   GET_USER_FAILURE,
 } from "./ActionTypes";
 
-
 const registerRequest = () => ({
   type: REGISTER_REQUEST,
 });
@@ -89,7 +88,7 @@ export const getUser = (jwt) => async (dispatch) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/api/users/profile`, {
       headers: {
-        "Authorization": `Bearer ${jwt}`
+        Authorization: `Bearer ${jwt}`,
       },
     });
 
@@ -101,7 +100,7 @@ export const getUser = (jwt) => async (dispatch) => {
   }
 };
 
-export const logout =()=> (dispatch) => {
+export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
     payload: null,

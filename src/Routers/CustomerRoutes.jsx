@@ -18,8 +18,8 @@ const CustomerRoutes = () => {
         <Navigation />
       </div>
       <Routes>
-      <Route path="/register" element={<Homepage />} />
-      <Route path="/login" element={<Homepage />} />
+        <Route path="/register" element={<Homepage />} />
+        <Route path="/login" element={<Homepage />} />
         <Route path="/" element={<Homepage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/:lave1One/:lavelTwo/:lavelThree" element={<Product />} />
@@ -28,7 +28,6 @@ const CustomerRoutes = () => {
         <Route path="/account/order" element={<Order />} />
         <Route path="/account/order/:orderId" element={<OrderDetails />} />
         <Route path="/payment/:orderId" element={<PaymentSucces />} />
-
       </Routes>
       <div>
         <Footer />

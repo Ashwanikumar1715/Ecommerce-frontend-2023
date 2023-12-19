@@ -29,7 +29,7 @@ export const addItemToCart = (reqData) => async (dispatch) => {
   dispatch({ type: ADD_ITEM_TO_CART_REQUEST });
   try {
     const { data } = await api.put("/api/cart/add", reqData);
-   
+
     dispatch({ type: ADD_ITEM_TO_CART_SUCCESS, payload: data });
     console.log("item added to cart", data);
   } catch (error) {
@@ -40,7 +40,7 @@ export const addItemToCart = (reqData) => async (dispatch) => {
 export const removeCartItem = (cartItemId) => async (dispatch) => {
   dispatch({ type: REMOVE_CART_ITEM_REQUEST });
   try {
-    console.log("cart item id", cartItemId)
+    console.log("cart item id", cartItemId);
     const { data } = await api.delete(`api/cart_items/${cartItemId}`);
     dispatch({ type: REMOVE_CART_ITEM_SUCCESS, payload: cartItemId });
   } catch (error) {

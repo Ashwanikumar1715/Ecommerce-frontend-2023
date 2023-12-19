@@ -17,11 +17,7 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { Pagination, Radio } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { findProducts } from "../../../State/Product/Action";
 const sortOptions = [
@@ -35,8 +31,8 @@ function classNames(...classes) {
 
 export default function Product() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const {products}=useSelector(store=>store)
-
+  const { products } = useSelector((store) => store);
+  console.log("productsjsx", products);
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -53,15 +49,12 @@ export default function Product() {
   const pageNumber = searchParams.get("page") || 1;
   const stock = searchParams.get("stock");
 
-
-
-
-const handlePagination=(event,value)=>{
-const searchParamms=new URLSearchParams(location.search);
-searchParamms.set("page", value);
-const query=searchParamms.toString();
-navigate({search:`${query}`})
-}
+  const handlePagination = (event, value) => {
+    const searchParamms = new URLSearchParams(location.search);
+    searchParamms.set("page", value);
+    const query = searchParamms.toString();
+    navigate({ search: `${query}` });
+  };
   const handleFilter = (value, sectionId) => {
     const searchParamms = new URLSearchParams(location.search);
 
@@ -93,7 +86,7 @@ navigate({search:`${query}`})
   useEffect(() => {
     const [minPrice, maxPrice] =
       priceValue == null ? [0, 10000] : priceValue.split("-").map(Number);
-  
+
     const data = {
       category: param.lavelThree, // Corrected variable name 'lavelThree' to 'levelThree'
       colors: colorValue || [],
@@ -118,7 +111,6 @@ navigate({search:`${query}`})
     pageNumber,
     stock,
   ]);
-  
 
   return (
     <div className="bg-white">
@@ -462,20 +454,24 @@ navigate({search:`${query}`})
               {/* Product grid */}
               <div className="lg:col-span-4 w-full">
                 <div className="flex flex-wrap justify-center bg-white py-5">
-                  {products.products && products.products?.content?.map((item) => (
-                    <ProductCard product={item} />
-                  ))}
+                  {products.products &&
+                    products.products?.content?.map((item) => (
+                      <ProductCard product={item} />
+                    ))}
                 </div>
               </div>
             </div>
           </section>
 
-<section className="w-full px=[3.6rem]">
-  <div className="pz-4 py-5 flex justify-center">
-    <Pagination count={products.products?.totalPages} color="secondary" onChange={handlePagination}/>
-  </div>
-</section>
-
+          <section className="w-full px=[3.6rem]">
+            <div className="pz-4 py-5 flex justify-center">
+              <Pagination
+                count={products.products?.totalPages}
+                color="secondary"
+                onChange={handlePagination}
+              />
+            </div>
+          </section>
         </main>
       </div>
     </div>

@@ -25,9 +25,9 @@ export const getOrders = () => {
   return async (dispatch) => {
     dispatch({ type: GET_ORDERS_REQUEST });
     try {
-      const response = await api.get("/api/admin/orders/");
+      const response = await api.get("/api/admin/orders");
       console.log("get all orders", response.data);
-      dispatch({type: GET_ORDERS_SUCCESS, payload: response.data });
+      dispatch({ type: GET_ORDERS_SUCCESS, payload: response.data });
     } catch (error) {
       console.log("catch error ", error);
       dispatch({ type: GET_ORDERS_FAILURE, payload: error.message });

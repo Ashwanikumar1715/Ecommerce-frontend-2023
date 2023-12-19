@@ -107,7 +107,7 @@ const adminOrderReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        deletedOrder:action.payload,
+        deletedOrder: action.payload,
         error: null,
       };
     case DELETE_ORDER_FAILURE:

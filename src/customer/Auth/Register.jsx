@@ -9,9 +9,8 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const jwt = localStorage.getItem("jwt");
-  const { auth } = useSelector(store=>store);
+  const { auth } = useSelector((store) => store);
   useEffect(() => {
-    
     if (jwt) {
       dispatch(getUser(jwt));
     }

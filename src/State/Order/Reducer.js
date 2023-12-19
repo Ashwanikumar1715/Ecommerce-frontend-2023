@@ -8,11 +8,11 @@ import {
 } from "./ActionTypes";
 
 const initialState = {
-    orders:[],
-    loading: false,
-    order: null,
-    error: null,
-  };
+  orders: [],
+  loading: false,
+  order: null,
+  error: null,
+};
 
 export const orderReducer = (state = initialState, action) => {
   switch (action.type) {

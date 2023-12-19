@@ -28,25 +28,27 @@ const OrdersTable = () => {
   const [anchorEl, setAnchorEl] = React.useState([]);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event,index) => {
-    const newAnchorElArray=[...anchorEl];
-    newAnchorElArray[index]=event.currentTarget;
-    setAnchorEl(newAnchorElArray)
-    
-
+  const handleClick = (event, index) => {
+    const newAnchorElArray = [...anchorEl];
+    newAnchorElArray[index] = event.currentTarget;
+    setAnchorEl(newAnchorElArray);
   };
   const handleClose = (index) => {
-    const newAnchorElArray=[...anchorEl];
-    newAnchorElArray[index]=null;
-    setAnchorEl(newAnchorElArray)
-    
+    const newAnchorElArray = [...anchorEl];
+    newAnchorElArray[index] = null;
+    setAnchorEl(newAnchorElArray);
   };
   const dispatch = useDispatch();
   const { adminOrder } = useSelector((store) => store);
 
   useEffect(() => {
     dispatch(getOrders());
-  }, [adminOrder.confirmed, adminOrder.shipped, adminOrder.delivered,adminOrder.deletedOrder]);
+  }, [
+    adminOrder.confirmed,
+    adminOrder.shipped,
+    adminOrder.delivered,
+    adminOrder.deletedOrder,
+  ]);
 
   console.log("adminorders", adminOrder);
 
@@ -81,11 +83,10 @@ const OrdersTable = () => {
                 <TableCell align="left">TotalItem</TableCell>
                 <TableCell align="left">Price</TableCell>
                 <TableCell align="left">Status</TableCell>
-             
               </TableRow>
             </TableHead>
             <TableBody>
-              {adminOrder?.orders?.map((item,index) => (
+              {adminOrder?.orders?.map((item, index) => (
                 <TableRow
                   key={item.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -106,7 +107,6 @@ const OrdersTable = () => {
                   <TableCell align="left">{item.totalItem}</TableCell>
                   <TableCell align="left">{item.totalPrice}</TableCell>
                   <TableCell align="left">{item.orderStatus}</TableCell>
-  
                 </TableRow>
               ))}
             </TableBody>

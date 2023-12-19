@@ -28,25 +28,27 @@ const OrdersTable = () => {
   const [anchorEl, setAnchorEl] = React.useState([]);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event,index) => {
-    const newAnchorElArray=[...anchorEl];
-    newAnchorElArray[index]=event.currentTarget;
-    setAnchorEl(newAnchorElArray)
-    
-
+  const handleClick = (event, index) => {
+    const newAnchorElArray = [...anchorEl];
+    newAnchorElArray[index] = event.currentTarget;
+    setAnchorEl(newAnchorElArray);
   };
   const handleClose = (index) => {
-    const newAnchorElArray=[...anchorEl];
-    newAnchorElArray[index]=null;
-    setAnchorEl(newAnchorElArray)
-    
+    const newAnchorElArray = [...anchorEl];
+    newAnchorElArray[index] = null;
+    setAnchorEl(newAnchorElArray);
   };
   const dispatch = useDispatch();
   const { adminOrder } = useSelector((store) => store);
 
   useEffect(() => {
     dispatch(getOrders());
-  }, [adminOrder.confirmed, adminOrder.shipped, adminOrder.delivered,adminOrder.deletedOrder]);
+  }, [
+    adminOrder.confirmed,
+    adminOrder.shipped,
+    adminOrder.delivered,
+    adminOrder.deletedOrder,
+  ]);
 
   console.log("adminorders", adminOrder);
 
@@ -86,7 +88,7 @@ const OrdersTable = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {adminOrder?.orders?.map((item,index) => (
+              {adminOrder?.orders?.map((item, index) => (
                 <TableRow
                   key={item.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -111,10 +113,8 @@ const OrdersTable = () => {
                     <Button variant="outlined">
                       <Button
                         id="basic-button"
-                        
                         aria-haspopup="true"
-                      
-                        onClick={(event)=>handleClick(event,index)}
+                        onClick={(event) => handleClick(event, index)}
                         aria-controls={`basic-menu-${item._id}`}
                         aria-expanded={Boolean(anchorEl[index])}
                       >
@@ -124,7 +124,7 @@ const OrdersTable = () => {
                         id={`basic-menu-${item._id}`}
                         anchorEl={anchorEl[index]}
                         open={Boolean(anchorEl[index])}
-                        onClose={()=>handleClose(index)}
+                        onClose={() => handleClose(index)}
                         MenuListProps={{
                           "aria-labelledby": "basic-button",
                         }}
@@ -149,7 +149,6 @@ const OrdersTable = () => {
                     <Button
                       variant="outlined"
                       onClick={() => handleDeleteOrder(item._id)}
-                     
                     >
                       DELETE
                     </Button>

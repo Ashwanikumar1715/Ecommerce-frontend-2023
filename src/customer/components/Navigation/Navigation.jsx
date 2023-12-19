@@ -15,7 +15,6 @@ import AuthModel from "../../Auth/AuthModel";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, logout } from "../../../State/Auth/Action";
 
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -28,7 +27,6 @@ export default function Navigation() {
   const [openAuthModel, setOpenAuthModel] = useState(false);
   const [anchorE1, setAnchorE1] = useState(null);
   const openUserMenu = Boolean(anchorE1);
-
 
   const handleUserClick = (event) => {
     setAnchorE1(event.currentTarget);
@@ -47,9 +45,8 @@ export default function Navigation() {
     close();
   };
 
-  
   const jwt = localStorage.getItem("jwt");
-  const auth = useSelector(state => state.auth);
+  const { auth } = useSelector((store) => store);
   const location = useLocation();
 
   useEffect(() => {
@@ -59,7 +56,7 @@ export default function Navigation() {
   }, [jwt, auth.jwt]);
 
   useEffect(() => {
-    console.log("authuser",auth.user)
+    console.log("authuser", auth.user);
     if (auth.user) {
       handleClose();
     }
@@ -68,11 +65,10 @@ export default function Navigation() {
     }
   }, [auth.user]);
 
-  const handleLogout=()=>{
-    dispatch(logout())
-    handleCloseUserMenu()
-  
-  }
+  const handleLogout = () => {
+    dispatch(logout());
+    handleCloseUserMenu();
+  };
 
   return (
     <div className="bg-white pb-10 ">
@@ -185,12 +181,18 @@ export default function Navigation() {
                             >
                               {section.items.map((item) => (
                                 <li key={item.name} className="flow-root">
-                                  <a
-                                    href={item.href}
-                                    className="-m-2 block p-2 text-gray-500"
+                                  <p
+                                    onClick={() =>
+                                      handleCategoryClick(
+                                        category,
+                                        section,
+                                        item
+                                      )
+                                    }
+                                    className="cursor-pointer hover:text-gray-800"
                                   >
                                     {item.name}
-                                  </a>
+                                  </p>
                                 </li>
                               ))}
                             </ul>
@@ -216,35 +218,50 @@ export default function Navigation() {
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
-                    <a
-                      href="#"
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                    >
-                      Sign in
-                    </a>
-                  </div>
-                  <div className="flow-root">
-                    <a
-                      href="#"
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                    >
-                      Create account
-                    </a>
-                  </div>
-                </div>
+                    {auth.user?.firstName ? (
+                      <div>
+                        <Avatar
+                          className="text-white"
+                          onClick={handleUserClick}
+                          aria-controls={open ? "basic-menu" : undefined}
+                          aria-aria-haspopup="true"
+                          aria-expanded={open ? "true" : undefined}
+                          sx={{
+                            bgcolor: deepPurple[500],
+                            color: "white",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {auth.user?.firstName[0].toUpperCase()}
+                        </Avatar>
 
-                <div className="border-t border-gray-200 px-4 py-6">
-                  <a href="#" className="-m-2 flex items-center p-2">
-                    <img
-                      src="https://tailwindui.com/img/flags/flag-canada.svg"
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span className="ml-3 block text-base font-medium text-gray-900">
-                      CAD
-                    </span>
-                    <span className="sr-only">, change currency</span>
-                  </a>
+                        <Menu
+                          id="basic-menu"
+                          anchorEl={anchorE1}
+                          open={openUserMenu}
+                          onClose={handleCloseUserMenu}
+                          MenuListProps={{
+                            "aria-labelledby": "basic-button",
+                          }}
+                        >
+                          <MenuItem onClick={handleCloseUserMenu}>
+                            Profile
+                          </MenuItem>
+                          <MenuItem onClick={() => navigate("/account/order")}>
+                            My Orders
+                          </MenuItem>
+                          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                        </Menu>
+                      </div>
+                    ) : (
+                      <Button
+                        onClick={handleOpen}
+                        className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                      >
+                        Signin
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -272,7 +289,7 @@ export default function Navigation() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
+                <a href="/">
                   <span className="sr-only">Ashwanimart</span>
                   <img
                     className="h-8 w-8 mr-2"

@@ -79,27 +79,20 @@ const Admin = () => {
   );
 
   return (
-    
-      <div className="relative flex h-[100vh] ">
-        <CssBaseline />
+    <div className="relative flex h-[100vh] ">
+      <CssBaseline />
 
-        <div className="w-[15%] border-r-gray-300 fixed top-0">
-          {drawer}
-       </div>
-        <div className="w-[85%] h-full ml-[15%]" >
-          <Routes>
-            <Route path="/" element={<Dashboard />}></Route>
-            <Route
-              path="/product/create"
-              element={<CreateProductForm />}
-            ></Route>
-            <Route path="/products" element={<ProductsTable />}></Route>
-            <Route path="/orders" element={<OrdersTable />}></Route>
-            <Route path="/customers" element={<CustomersTable />}></Route>
-          </Routes>
-        </div>
-        </div>
-
+      <div className="w-[15%] border-r-gray-300 fixed top-0">{drawer}</div>
+      <div className="w-[85%] h-full ml-[15%]">
+        <Routes>
+          <Route path="/" element={<Dashboard />}></Route>
+          <Route path="/product/create" element={<CreateProductForm />}></Route>
+          <Route path="/products" element={<ProductsTable />}></Route>
+          <Route path="/orders" element={<OrdersTable />}></Route>
+          <Route path="/customers" element={<CustomersTable />}></Route>
+        </Routes>
+      </div>
+    </div>
   );
 };
 

@@ -6,30 +6,30 @@ import { createOrder } from "../../../State/Order/Action";
 import { useNavigate } from "react-router-dom";
 
 const DeliveryAddressForm = () => {
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
- 
- const {auth}=useSelector(store=>store) 
-console.log("auth",auth)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const data = new FormData(e.currentTarget);
-        const address = {
-            firstName: data.get("firstName"),
-            lastName: data.get("lastName"),
-            streetAddress: data.get("address"), 
-            city: data.get("city"),
-            state: data.get("state"),
-            zipCode: data.get("zip"),
-            mobile: data.get("phone"),
-          };
-          const orderData={address,navigate};
-          dispatch(createOrder(orderData))
-          
-        console.log("address", address);
-      };
-      
+  const { auth } = useSelector((store) => store);
+  console.log("auth", auth);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const address = {
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      streetAddress: data.get("address"),
+      city: data.get("city"),
+      state: data.get("state"),
+      zipCode: data.get("zip"),
+      mobile: data.get("phone"),
+    };
+    const orderData = { address, navigate };
+    dispatch(createOrder(orderData));
+
+    console.log("address", address);
+  };
+
   return (
     <div>
       <Grid container spacing={4}>
@@ -40,7 +40,9 @@ console.log("auth",auth)
           className="border rounded-md shadow-md h-[30.5rem] overflow-y-scroll"
         >
           <div className="p-5 py-7 border-b cursor-pointer">
-         {auth.user?.address?.map((item)=> <AddressCard address={item} />)}   
+            {auth.user?.address?.map((item) => (
+              <AddressCard address={item} />
+            ))}
             <Button
               sx={{ mt: 2, bgcolor: "rgb(145, 85, 253)" }}
               size="large"
@@ -53,7 +55,7 @@ console.log("auth",auth)
 
         <Grid item xs={12} lg={7}>
           <Box className="border roundded-s-md shadow-md p-5">
-            <form onSubmit={handleSubmit}> 
+            <form onSubmit={handleSubmit}>
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                   <TextField

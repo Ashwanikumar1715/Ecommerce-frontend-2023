@@ -1,11 +1,14 @@
 import { Grid } from "@mui/material";
 import React from "react";
-import AdjustIcon from '@mui/icons-material/Adjust';
+import AdjustIcon from "@mui/icons-material/Adjust";
 import { useNavigate } from "react-router-dom";
 const OrderCard = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   return (
-    <div onClick={()=>navigate(`/account/order/${5}`)} className="p-5 shadow-md shadow-black hover:shadow-2xl">
+    <div
+      onClick={() => navigate(`/account/order/${5}`)}
+      className="p-5 shadow-md shadow-black hover:shadow-2xl"
+    >
       <Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
         <Grid item xs={6}>
           <div className="flex cursor-pointer">
@@ -21,32 +24,28 @@ const OrderCard = () => {
             </div>
           </div>
         </Grid>
-<Grid item xs={2}>
-    <p>1099</p>
-</Grid>
-<Grid item xs={4}>
-{
-    true&&<div>
-        <p>
-        <AdjustIcon className="text-green-600 mr-2 text-sm" sx={{width:"15px", height:"15px"}}/>
-    <span>
-        Deliverde on 3rd march
-    </span>
-</p>
-<p className="text-xs">
-    your item has been delivered
-</p>
-    </div>
-}
-{
-    false&&<p>
-    <span>
-       expected Delivery on 3rd march
-    </span>
-</p>
-}
-
-</Grid>
+        <Grid item xs={2}>
+          <p>1099</p>
+        </Grid>
+        <Grid item xs={4}>
+          {true && (
+            <div>
+              <p>
+                <AdjustIcon
+                  className="text-green-600 mr-2 text-sm"
+                  sx={{ width: "15px", height: "15px" }}
+                />
+                <span>Deliverde on 3rd march</span>
+              </p>
+              <p className="text-xs">your item has been delivered</p>
+            </div>
+          )}
+          {false && (
+            <p>
+              <span>expected Delivery on 3rd march</span>
+            </p>
+          )}
+        </Grid>
       </Grid>
     </div>
   );

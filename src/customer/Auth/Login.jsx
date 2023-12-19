@@ -5,10 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../State/Auth/Action";
 
 const Login = () => {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -17,7 +15,7 @@ const Login = () => {
       email: data.get("email"),
       password: data.get("password"),
     };
-    dispatch(login(userData))
+    dispatch(login(userData));
     console.log("userdata", userData);
   };
   return (

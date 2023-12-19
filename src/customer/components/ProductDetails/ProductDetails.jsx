@@ -66,22 +66,22 @@ function classNames(...classes) {
 
 export default function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState("");
-const navigate=useNavigate();
-const params=useParams();
-const dispatch=useDispatch();
-const {products}=useSelector(store=>store)
+  const navigate = useNavigate();
+  const params = useParams();
+  const dispatch = useDispatch();
+  const { products } = useSelector((store) => store);
 
-const handleAddtoCart=()=>{
-  const data={productId:params.productId, size:selectedSize.name}
-  console.log("data", data)
-  dispatch(addItemToCart(data));
-  navigate("/cart")
-}
-useEffect(()=>{
-  const data={productId:params.productId}
-  
-dispatch(findProductsById(data));
-},[params.productId])
+  const handleAddtoCart = () => {
+    const data = { productId: params.productId, size: selectedSize.name };
+    console.log("data", data);
+    dispatch(addItemToCart(data));
+    navigate("/cart");
+  };
+  useEffect(() => {
+    const data = { productId: params.productId };
+
+    dispatch(findProductsById(data));
+  }, [params.productId]);
 
   return (
     <div className="bg-white lg:px-20">
@@ -163,10 +163,15 @@ dispatch(findProductsById(data));
             <div className="mt-4 1g:row-span-3 1g:mt-0">
               <h2 className="sr-only">{products.products?.description}</h2>
               <div className="flex space-x-5 items-center text-lg lg:text-xl text-gray-900 mt-6">
-              <p className="font-semibold">{products.products?.discountedPrice} </p>
-                <p className="opacity-50 line-through">{products.products?.price} </p>
-                <p className="text-green-600 font-semibold">{products.products?.discountPersent}% Off</p>
-         
+                <p className="font-semibold">
+                  {products.products?.discountedPrice}{" "}
+                </p>
+                <p className="opacity-50 line-through">
+                  {products.products?.price}{" "}
+                </p>
+                <p className="text-green-600 font-semibold">
+                  {products.products?.discountPresent}% Off
+                </p>
               </div>
 
               {/* Reviews */}
@@ -262,7 +267,8 @@ dispatch(findProductsById(data));
                   </RadioGroup>
                 </div>
 
-                <Button onClick={handleAddtoCart}
+                <Button
+                  onClick={handleAddtoCart}
                   variant="contained"
                   sx={{
                     mt: "1rem",
@@ -271,7 +277,6 @@ dispatch(findProductsById(data));
                     bgcolor: "#9155fd",
                   }}
                 >
-                 
                   Add To Cart
                 </Button>
               </form>
@@ -474,12 +479,12 @@ dispatch(findProductsById(data));
 
         {/* similar-products */}
         <section className="pt-10">
-       <h1 className="py-5 text-xl font-bold">Similar Products</h1>
-       <div className="flex flex-wrap space-y-5">
-        {
-            mens_kurta.map((item)=><HomeSectionCard product={item}/>)
-        }
-       </div>
+          <h1 className="py-5 text-xl font-bold">Similar Products</h1>
+          <div className="flex flex-wrap space-y-5">
+            {mens_kurta.map((item) => (
+              <HomeSectionCard product={item} />
+            ))}
+          </div>
         </section>
       </div>
     </div>

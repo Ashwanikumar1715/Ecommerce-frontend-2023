@@ -22,7 +22,7 @@ const ProductReviewCard = () => {
               <p className="opacity-70">April 5, 2023</p>
             </div>
           </div>
-          <Rating value={4.5} name="half-rating" readOnly precision={.5}/>
+          <Rating value={4.5} name="half-rating" readOnly precision={0.5} />
           <p>nice product loved it...</p>
         </Grid>
       </Grid>

@@ -44,7 +44,7 @@ export const singleFilter = [
       { value: "999-1999", label: "$999-$1999" },
       { value: "1999-2999", label: "$1999-$2999" },
       { value: "2999-3999", label: "$2999-$3999" },
-    ]
+    ],
   },
   {
     id: "discount",
@@ -66,7 +66,7 @@ export const singleFilter = [
       { value: "in_stock", label: "In Stock" },
       { value: "out_of_stock", label: "Out Stock" },
     ],
-  }
+  },
 ];
 
 export const sortOptions = [
