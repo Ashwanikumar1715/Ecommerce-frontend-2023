@@ -72,6 +72,7 @@ const ProductsTable = () => {
                       <Button
                         onClick={() => handleProductDelete(item._id)}
                         variant="outlined"
+                        sx={{color:"#EEC213", bgcolor:"#E71C23"}}
                       >
                         DELETE
                       </Button>

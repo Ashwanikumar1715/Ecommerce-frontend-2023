@@ -88,7 +88,7 @@ export default function Product() {
       priceValue == null ? [0, 10000] : priceValue.split("-").map(Number);
 
     const data = {
-      category: param.lavelThree, // Corrected variable name 'lavelThree' to 'levelThree'
+      category: param.lavelThree, 
       colors: colorValue || [],
       sizes: sizeValue || [], // Corrected '||' instead of '|'
       minPrice,

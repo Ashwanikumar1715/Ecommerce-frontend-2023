@@ -270,10 +270,6 @@ export default function Navigation() {
       </Transition.Root>
 
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-          Get free delivery on orders over $100
-        </p>
-
         <nav aria-label="Top" className="mx-auto m">
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center px-11">
@@ -293,7 +289,7 @@ export default function Navigation() {
                   <span className="sr-only">Ashwanimart</span>
                   <img
                     className="h-8 w-8 mr-2"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                    src="https://cdn.pixabay.com/photo/2016/12/26/18/33/logo-1932539_1280.png"
                     alt=""
                   />
                 </a>
@@ -471,6 +467,7 @@ export default function Navigation() {
                     <Button
                       onClick={handleOpen}
                       className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                      sx={{color:"#333945", bgcolor:"#DAE0E2"}}
                     >
                       Signin
                     </Button>
@@ -490,14 +487,14 @@ export default function Navigation() {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 flex items-center p-2">
+                  <a href="/cart" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                    {/* <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
                       2
-                    </span>
+                    </span> */}
                     <span className="sr-only">items in cart, view bag</span>
                   </a>
                 </div>

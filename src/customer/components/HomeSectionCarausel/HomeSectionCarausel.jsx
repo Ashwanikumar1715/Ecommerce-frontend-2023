@@ -8,7 +8,7 @@ const HomeSectionCarausel = ({ data, sectionName }) => {
   const responsive = {
     0: { items: 1 },
     720: { items: 3 },
-    1024: { items: 5 },
+    1024: { items: 5.5 },
   };
 
   const slidePrev = () => setActiveIndex(activeIndex - 1);

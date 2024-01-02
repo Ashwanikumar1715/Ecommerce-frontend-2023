@@ -117,6 +117,7 @@ const OrdersTable = () => {
                         onClick={(event) => handleClick(event, index)}
                         aria-controls={`basic-menu-${item._id}`}
                         aria-expanded={Boolean(anchorEl[index])}
+                        sx={{color:"#EEC213", bgcolor:"#01CBC6"}}
                       >
                         STATUS
                       </Button>
@@ -149,6 +150,7 @@ const OrdersTable = () => {
                     <Button
                       variant="outlined"
                       onClick={() => handleDeleteOrder(item._id)}
+                      sx={{color:"#EEC213", bgcolor:"#E71C23"}}
                     >
                       DELETE
                     </Button>
