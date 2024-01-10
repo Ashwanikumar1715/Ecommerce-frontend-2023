@@ -2,6 +2,7 @@ import { api } from "../../config/apiConfig";
 import {
   CREATE_PAYMENT_FAILURE,
   CREATE_PAYMENT_REQUEST,
+  CREATE_PAYMENT_SUCCESS,
   UPDATE_PAYMENT_FAILURE,
   UPDATE_PAYMENT_REQUEST,
 } from "./Actiontype";
@@ -12,6 +13,7 @@ export const createPayment = (orderId) => async (dispatch) => {
     const { data } = await api.post(`/api/payments/${orderId}`, {});
     if (data.payment_link_url) {
       window.location.href = data.payment_link_url;
+      dispatch({ type: CREATE_PAYMENT_SUCCESS, payload: data });
     }
   } catch (error) {
     dispatch({ type: CREATE_PAYMENT_FAILURE, payload: error.message });
